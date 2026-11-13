@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# secrets (keep .env.example tracked)
+.env
+.env.*
+!.env.example
+teams/*.env
+
+# collector output (may contain internal issue data)
+output/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.log

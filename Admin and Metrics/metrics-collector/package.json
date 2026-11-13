@@ -1,0 +1,21 @@
+{
+  "name": "metrics-collector",
+  "version": "0.1.0",
+  "description": "One-off / ad-hoc engineering metrics collector (Jira Cloud, Confluence, Bamboo, SonarQube, Fortify SSC, Nexus IQ, Dynatrace, ServiceNow, QMetry). Configured entirely by environment variables.",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": { "metrics-collector": "src/index.js" },
+  "scripts": {
+    "start": "node src/index.js",
+    "list": "node src/index.js --list",
+    "check": "node src/index.js --check",
+    "selftest": "node src/index.js --selftest",
+    "dry-run": "node src/index.js --dry-run",
+    "test": "node --test test/"
+  },
+  "engines": { "node": ">=22.19" },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "undici": "^8.12.0"
+  }
+}

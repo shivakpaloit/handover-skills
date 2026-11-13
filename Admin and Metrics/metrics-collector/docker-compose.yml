@@ -1,0 +1,92 @@
+# Local stand-ins for the on-prem tools, so the collector can be exercised without touching real instances.
+#
+#   docker compose up -d                       # SonarQube (+ Postgres)       -> http://localhost:9000
+#   docker compose --profile bamboo up -d      # also Bamboo (+ Postgres)     -> http://localhost:8085
+#   docker compose down                        # stop (add -v to also delete data)
+#
+# Not available as local containers (commercial/SaaS, no free self-hosted image): Fortify SSC, Nexus IQ Server
+# (needs a license), ServiceNow, Dynatrace, QMetry, Jira Cloud, Confluence Cloud. Test those against real instances.
+# See README "Local test tools" for the matching .env values.
+
+services:
+  sonarqube-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+      POSTGRES_DB: sonar
+    volumes:
+      - sonarqube_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sonar -d sonar"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  sonarqube:
+    image: sonarqube:community
+    depends_on:
+      sonarqube-db:
+        condition: service_healthy
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonarqube-db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+      # Small heaps so it fits in a ~2 GB container VM (raise for real use); skip ES bootstrap checks for local dev.
+      SONAR_SEARCH_JAVAOPTS: -Xms256m -Xmx256m
+      SONAR_WEB_JAVAOPTS: -Xmx384m
+      SONAR_CE_JAVAOPTS: -Xmx384m
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    # On Linux hosts SonarQube's Elasticsearch needs: sysctl -w vm.max_map_count=524288 (not needed on Docker Desktop).
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9000/api/system/status | grep -q '\"status\":\"UP\"'"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 60s
+
+  # Bamboo needs a license: request a free 30-day evaluation key at https://my.atlassian.com and paste it into the
+  # setup wizard at http://localhost:8085. Opt-in because it is heavy (~2 GB RAM).
+  bamboo-db:
+    profiles: ["bamboo"]
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: bamboo
+      POSTGRES_PASSWORD: bamboo
+      POSTGRES_DB: bamboo
+    volumes:
+      - bamboo_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bamboo -d bamboo"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  bamboo:
+    profiles: ["bamboo"]
+    image: atlassian/bamboo:latest
+    depends_on:
+      bamboo-db:
+        condition: service_healthy
+    environment:
+      JVM_MINIMUM_MEMORY: 512m
+      JVM_MAXIMUM_MEMORY: 1536m
+    ports:
+      - "8085:8085"
+    volumes:
+      - bamboo_home:/var/atlassian/application-data/bamboo
+    # In the setup wizard choose an external PostgreSQL database: host bamboo-db, port 5432, db/user/password bamboo.
+
+volumes:
+  sonarqube_db:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  bamboo_db:
+  bamboo_home:
