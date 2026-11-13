@@ -1,0 +1,14 @@
+{
+  "name": "jmeter-report-to-png",
+  "private": true,
+  "type": "module",
+  "description": "Render the cards of a JMeter HTML dashboard report to PNG files.",
+  "dependencies": {
+    "canvas": "^3.1.0",
+    "chart.js": "^4.4.8",
+    "chartjs-node-canvas": "^5.0.0"
+  },
+  "allowScripts": {
+    "canvas": true
+  }
+}

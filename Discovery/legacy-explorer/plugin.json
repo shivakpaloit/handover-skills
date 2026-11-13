@@ -1,0 +1,20 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "legacy-explorer",
+  "version": "0.1.0",
+  "description": "Explores an existing or legacy app with no trusted docs and writes evidence-backed views: UI summary (pages, fields, actions), API (served and called), data models, and user journeys. Inventories run in parallel or series; journeys stitch them together.",
+  "author": {
+    "name": "Gen-e2"
+  },
+  "license": "MIT",
+  "keywords": [
+    "legacy",
+    "reverse-engineering",
+    "codebase-exploration",
+    "user-journeys",
+    "api-inventory",
+    "data-model",
+    "ui-inventory",
+    "modernisation"
+  ]
+}

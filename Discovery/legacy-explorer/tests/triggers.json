@@ -1,0 +1,35 @@
+{
+  "tier": 1,
+  "tests": [
+    {
+      "prompt": "list every endpoint this app exposes and every external service it calls",
+      "expected": "api-explorer",
+      "rationale": "Inbound and outbound API inventory is api-explorer."
+    },
+    {
+      "prompt": "what downstream systems does this legacy backend integrate with?",
+      "expected": "api-explorer",
+      "rationale": "Outbound calls (app as client) are api-explorer."
+    },
+    {
+      "prompt": "document the tables, entities and DTOs in this codebase and how they relate",
+      "expected": "data-model-explorer",
+      "rationale": "Stored and transferred models with relationships are data-model-explorer."
+    },
+    {
+      "prompt": "give me every screen in this app with its fields and buttons",
+      "expected": "ui-explorer",
+      "rationale": "Pages, fields and actions are ui-explorer."
+    },
+    {
+      "prompt": "here's the meeting transcript and some screenshots, extract the user journeys from this app",
+      "expected": "journey-explorer",
+      "rationale": "Journey extraction triangulating transcript, screenshots and code is the journey-explorer skill."
+    },
+    {
+      "prompt": "list the personas and step-by-step user flows with the API and logic behind each step",
+      "expected": "journey-explorer",
+      "rationale": "Personas plus action/component/API/data/logic flow tables are journey-explorer's output."
+    }
+  ]
+}

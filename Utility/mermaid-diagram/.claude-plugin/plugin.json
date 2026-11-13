@@ -1,0 +1,23 @@
+{
+  "name": "mermaid-diagram",
+  "description": "Create, review, or fix any Mermaid diagram — flowchart, sequence, state, ER, C4, class, Gantt, mindmap, requirement, XY chart, block, kanban, architecture, radar, treemap, packet, and more. Inventory-first drafting, two-pass verification, and Mermaid-version/renderer-compatibility awareness.",
+  "version": "0.2.0",
+  "author": {
+    "name": "Gen-e2"
+  },
+  "license": "MIT",
+  "keywords": [
+    "mermaid",
+    "diagram",
+    "flowchart",
+    "sequence-diagram",
+    "state-machine",
+    "erd",
+    "c4",
+    "architecture",
+    "documentation",
+    "kanban",
+    "radar-chart",
+    "xy-chart"
+  ]
+}

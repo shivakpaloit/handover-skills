@@ -1,0 +1,66 @@
+{
+  "$schema": "../../../schemas/triggers.schema.json",
+  "tier": 1,
+  "tests": [
+    {
+      "prompt": "add a mermaid diagram of the auth flow to the README",
+      "expected": "mermaid-diagram",
+      "rationale": "Plain in-repo Mermaid authoring is the core use case."
+    },
+    {
+      "prompt": "create a sequence diagram for our login flow",
+      "expected": "mermaid-diagram",
+      "rationale": "Sequence diagrams with no other tool named default to Mermaid via this skill."
+    },
+    {
+      "prompt": "this mermaid flowchart renders with the subgraphs stacked vertically, fix it",
+      "expected": "mermaid-diagram",
+      "rationale": "Repairing broken/mis-rendering Mermaid diagrams is an explicit trigger, covered by layout-troubleshooting.md."
+    },
+    {
+      "prompt": "draw a state machine for the ticket lifecycle statuses",
+      "expected": "mermaid-diagram",
+      "rationale": "State diagrams are a supported type in the pattern catalogue."
+    },
+    {
+      "prompt": "turn this Mermaid flowchart into a Lucidchart diagram",
+      "expected": null,
+      "rationale": "Delivery into Lucid belongs to the lucid-diagram plugin, not Mermaid authoring."
+    },
+    {
+      "prompt": "draw a sequence diagram in FigJam",
+      "expected": null,
+      "rationale": "FigJam diagrams belong to the Figma tooling, not Mermaid."
+    },
+    {
+      "prompt": "plot a bar chart of monthly sales from this CSV",
+      "expected": null,
+      "rationale": "Data-dense charts are an explicit non-goal; the skill itself says to use a real charting tool."
+    },
+    {
+      "prompt": "add a kanban board diagram of our sprint backlog to the docs",
+      "expected": "mermaid-diagram",
+      "rationale": "Newer Mermaid diagram types (kanban) are covered by diagram-patterns.md Pattern 20 and must trigger the same as the established types."
+    },
+    {
+      "prompt": "draw an architecture diagram of our AWS services in mermaid",
+      "expected": "mermaid-diagram",
+      "rationale": "Cloud/CI-CD topology maps to architecture-beta (Pattern 21) — confirms the newest diagram-type additions are reachable via natural language, not just exact keyword prompts."
+    },
+    {
+      "prompt": "my mermaid node label has a line break in it but it renders as a literal backslash-n instead of two lines, fix it",
+      "expected": "mermaid-diagram",
+      "rationale": "Exercises the `<br>` vs `\\n` multi-line label rule (SKILL.md Step 4, layout-troubleshooting.md catalogue) as a repair request, not just fresh authoring."
+    },
+    {
+      "prompt": "I need this mermaid diagram embedded as an image in our Marp slide deck since Marp can't render mermaid fences live",
+      "expected": "mermaid-diagram",
+      "rationale": "Non-native-renderer targets route to exporting-to-svg.md (SVG export + width/max-width patch) rather than a plain fenced code block."
+    },
+    {
+      "prompt": "what is the capital of France",
+      "expected": null,
+      "rationale": "Off-topic prompt should not trigger the skill."
+    }
+  ]
+}
